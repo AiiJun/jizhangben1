@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>提醒</title>
+  <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.css" rel="stylesheet" />
+  <style>
+    .h-50 {
+      height: 50px;
+    }
+
+    /* 添加一个简单的倒计时动画 */
+    @keyframes countdown {
+      0% {
+        opacity: 1;
+      }
+      100% {
+        opacity: 0;
+      }
+    }
+
+    #countdown {
+      animation: countdown 1s linear infinite alternate;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="h-50"></div>
+    <div class="alert alert-success" role="alert">
+      <h1>:) <%= msg %></h1>
+      <p>将在 <span id="countdown">2</span> 秒后自动跳转...<a href="<%= url %>">点击跳转</a></p>
+    </div>
+  </div>
+
+  <script>
+    var countdownElement = document.getElementById("countdown");
+    var seconds = 2; // 倒计时的总秒数
+    countdownElement.textContent = seconds;
+
+    var countdownInterval = setInterval(function () {
+      seconds--;
+      countdownElement.textContent = seconds;
+
+      if (seconds <= 0) {
+        clearInterval(countdownInterval); // 停止倒计时
+        window.location.href = "<%= url %>"; // 替换为你想要跳转的URL
+      }
+    }, 1000); // 每隔1秒更新倒计时
+  </script>
+</body>
+
+</html>

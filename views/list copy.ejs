@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>记账本</title>
+    <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.css" rel="stylesheet" />
+    <style>
+        label {
+            font-weight: normal;
+        }
+
+        .panel-body .glyphicon-remove {
+            display: none;
+        }
+
+        .panel-body:hover .glyphicon-remove {
+            display: inline-block
+        }
+        /* 添加按钮的样式 */
+        #createButton.glow-button {
+            /* 设置按钮样式 */
+            width: 400px;
+            height: 100px;
+            line-height: 100px;
+            text-align: center;
+            text-decoration: none;
+            text-transform: uppercase;
+            font-size: 24px;
+            color: #fff;
+            /* 渐变背景 */
+            background: linear-gradient(to right, #03a9f4, #f441a5, #ffeb3b, #09a8f4);
+            /* 背景渐变色大小 */
+            background-size: 400%;
+            /* 圆角 */
+            border-radius: 50px;
+            z-index: 1;
+        }
+
+        /* 发光效果 */
+        #createButton.glow-button::before {
+            content: "";
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            bottom: -5px;
+            right: -5px;
+            /* 渐变背景 */
+            background: linear-gradient(to right, #03a9f4, #f441a5, #ffeb3b, #09a8f4);
+            /* 背景渐变色大小 */
+            background-size: 400%;
+            /* 圆角 */
+            border-radius: 50px;
+            /* 位于按钮之下 */
+            z-index: -1;
+            /* 设置模糊度 显示发光效果 */
+            filter: blur(20px);
+        }
+
+        /* 鼠标移入执行动画 */
+        #createButton.glow-button:hover {
+            /* 动画：名称 时间 infinite是无限次播放 */
+            animation: streamer 8s infinite;
+        }
+
+        /* 控制背景的渐变色变化 */
+        #createButton.glow-button:hover::before {
+            animation: streamer 8s infinite;
+        }
+
+        /* 定义动画 */
+        @keyframes streamer {
+            100% {
+                /* 背景位置 */
+                background-position: -400% 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-lg-8 col-lg-offset-2">
+                <h2>记账本</h2>
+                <hr />
+                <div id="buttonContainer">
+                    <!-- 添加一个按钮 -->
+                    <button id="createButton" class="btn btn-primary glow-button">创建账单</button>
+                </div>
+                <hr />
+                <div class="accounts">
+                    <!-- accounts 组件内容 -->
+                    <% accounts.forEach(item=>{ %>
+                    <div class="panel <%= item.type==='-1' ? 'panel-danger' : 'panel-success' %>"
+                        data-account-id="<%= item.id %>">
+                        <div class="panel-heading">
+                            <%= item.time%>
+                        </div>
+                        <div class="panel-body">
+                            <div class="col-xs-4">
+                                <%= item.title%>
+                            </div>
+                            <div class="col-xs-4">
+                                <%= item.remarks%>
+                            </div>
+                            <div class="col-xs-1 text-center">
+                                <span class="label <%= item.type==='-1' ? 'label-warning' : 'label-success' %>">
+                                    <%= item.type==='-1' ? '支出' : '收入' %>
+                                </span>
+                            </div>
+                            <div class="col-xs-2 text-right">
+                                <%= item.account%>元
+                            </div>
+                            <div class="col-xs-1 text-right">
+                                <a href="/account/<%= item.id %>"><span class="glyphicon glyphicon-remove"
+                                        aria-hidden="true"></span></a>
+                            </div>
+                        </div>
+                    </div>
+                    <% }) %>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 获取按钮元素
+        const createButton = document.getElementById("createButton");
+
+        // 添加按钮点击事件处理程序
+        createButton.addEventListener("click", function () {
+            // 跳转到/create页面
+            window.location.href = "/account/create";
+        });
+    </script>
+</body>
+
+</html>
