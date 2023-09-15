@@ -9,6 +9,7 @@ var authRouter = require("./routes/web/auth");
 //导入 account 接口路由文件
 const accountRouter = require("./routes/api/account");
 const authApiRouter = require("./routes/api/auth");
+const jokeApiRouter = require("./routes/api/joke");
 //导入 express-session connect-mongo
 const session = require("express-session");
 const MongoStore = require("connect-mongo");
@@ -48,6 +49,7 @@ app.use("/", indexRouter);
 app.use("/", authRouter);
 app.use("/api", accountRouter);
 app.use("/api", authApiRouter);
+app.use("/api", jokeApiRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

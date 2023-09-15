@@ -8,7 +8,7 @@ var router = express.Router();
 const moment = require("moment");
 const AccountModel = require("../../model/AccountModel");
 
-//记账本的列表
+//心情记录本的列表
 router.get("/", checkTokenMiddleware, function (req, res, next) {
   console.log(req.user);
   //获取数据库中的账单信息
