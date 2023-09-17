@@ -20,7 +20,7 @@ console.log(moment(new Date()).toDate());
 // console.log(moment(new Date()).format("YYYY-MM-DD"));
 
 //记账本的列表
-router.get("/", checkLoginMiddleware, function (req, res, next) {
+router.get("/", function (req, res, next) {
   //获取数据库中的账单信息
   AccountModel.find()
     .sort({ time: -1 })
